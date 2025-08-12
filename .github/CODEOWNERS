@@ -1,0 +1,14 @@
+# CODEOWNERS file - Defines code ownership and review requirements for SDK repository
+# This file is managed by Terraform - do not edit manually
+
+# Cloud Build and CI/CD configuration files require approval from the DevOps team
+cloudbuild.yaml @dg-ghtest/devops-team
+trigger.yaml @dg-ghtest/devops-team
+scripts/update.sh @dg-ghtest/devops-team
+
+# Terraform-managed files require approval from the DevOps team
+.github/CODEOWNERS @dg-ghtest/devops-team
+
+# Any files in .github directory (workflows, templates, etc.)
+.github/ @dg-ghtest/devops-team
+# Additional code ownership rules*/models/ @dg-ghtest/sdk-team*/training/ @dg-ghtest/sdk-team*/inference/ @dg-ghtest/sdk-teamnotebooks/ @dg-ghtest/docs-team
