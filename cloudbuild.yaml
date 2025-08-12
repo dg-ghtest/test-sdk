@@ -1,0 +1,39 @@
+steps:
+  # Step 1: Health check (validate GitHub App authentication)
+  - name: 'gcr.io/cloud-builders/git'
+    id: 'health-check'
+    entrypoint: 'bash'
+    args:
+      - './scripts/health-check.sh'
+    env:
+      - 'PROJECT_ID=dgzn-terraform'
+      - 'GITHUB_APP_ID=1770057'
+      - 'GITHUB_APP_PRIVATE_KEY_SECRET=github-app-private-key'
+      - 'INSTALLATION_ID_SECRET=test-sdk-installation-id'
+      - 'GITHUB_REPOSITORY=dg-ghtest/test-sdk'
+      - 'GITHUB_REPOSITORY_OWNER=dg-ghtest'
+
+  # Step 2: Run the GitHub App PR automation script
+  - name: 'gcr.io/cloud-builders/git'
+    id: 'run-github-app-automation'
+    entrypoint: 'bash'
+    args:
+      - './scripts/update.sh'
+    env:
+      - 'PROJECT_ID=dgzn-terraform'
+      - 'GITHUB_APP_ID=1770057'
+      - 'GITHUB_APP_PRIVATE_KEY_SECRET=github-app-private-key'
+      - 'INSTALLATION_ID_SECRET=test-sdk-installation-id'
+      - 'GITHUB_REPOSITORY=dg-ghtest/test-sdk'
+      - 'GITHUB_REPOSITORY_OWNER=dg-ghtest'
+
+# Service account configuration
+serviceAccount: 'test-sdk-sa@dgzn-terraform.iam.gserviceaccount.com'
+
+# Logging configuration
+options:
+  logging: CLOUD_LOGGING_ONLY
+  logStreamingOption: STREAM_ON
+
+# Timeout (30 minutes)
+timeout: '1800s'
